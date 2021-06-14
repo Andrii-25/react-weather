@@ -1,0 +1,13 @@
+body {
+  background-color: #2c8dde;
+}
+
+#main-block {
+    background-color: #fafafa;
+    position: absolute;
+    top: 50px;
+    right: 30px;
+    bottom: 50px;
+    left: 30px;
+    border-radius: 10px;
+}

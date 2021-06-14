@@ -1,0 +1,11 @@
+input {
+    position: relative;
+    float: right;
+    height: 40px;
+    width: 400px;
+    top: 25px;
+    right: 70px;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    display: block;
+}
