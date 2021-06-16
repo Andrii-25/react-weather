@@ -1,11 +1,11 @@
 import React, { useState, useEffect} from 'react';
 import '../css/WeatherInfo.css';
-import { Cloud } from '../icons/weather';
+// import { Cloud } from '../icons/weather';
 
 function WeatherNow() {
-    const [weather, setWeather] = useState({});
-    const [isLoaded, setLoading] = useState(false);
-    const [querry, setQuerry] = useState('Lviv')
+    const [data, setData] = useState({});
+    const [isLoaded, setLoaded] = useState(false);
+    const [querry, setQuerry] = useState('Lviv');
 
     const dateBuilder = (d) => {
         let date = new Date(d * 1000);
@@ -18,12 +18,12 @@ function WeatherNow() {
     const API_KEY = 'd59f4924123076df608199b4d5280705';
 
       useEffect(() => {
-      fetch(`http://api.openweathermap.org/data/2.5/weather?q=${querry}&units=metric&appid=${API_KEY}`)
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=Lviv&units=metric&appid=${API_KEY}`)
       .then(res => res.json())
       .then(result => {
-          setWeather(result);
-          setLoading(true);
-          console.log(result);
+          setData(result);
+          setLoaded(true);
+        //   console.log(data);
       })
       }, []);
     
@@ -31,23 +31,26 @@ function WeatherNow() {
           return <div>Loading...</div>
       }
 
+      const iconCode = data.weather[0].icon;
+      const iconURL = `http://openweathermap.org/img/w/${iconCode}.png`;
+
     return (
         <div className="wrapper">
-            <img id="icon" src={Cloud} />
-            <span id="temperature">{Math.round(weather.main.temp)}°c<br/>{weather.name}, {weather.sys.country}<br/>{dateBuilder(weather.dt)}</span>
+            <img id="icon" src={iconURL} />
+            <span id="temperature">{Math.round(data.main.temp)}°c<br/>{data.name}, {data.sys.country}<br/>{dateBuilder(data.dt)}</span>
             {/* <span id="location">Los Angeles, USA</span>
             <span id="date">Wednesday, 22:18</span> */}
             <div className="block">Min & Max<br/> temperature<br/>
-                <span className="txt">{Math.round(weather.main.temp_min)}°c & {Math.round(weather.main.temp_max)}°c</span>
+                <span className="txt">{Math.round(data.main.temp_max)}°c & {Math.round(data.main.temp_max)}°c</span>
             </div>
             <div className="block">Wind Status<br/><br/>
-                <span className="txt">{weather.wind.speed} km/h</span>
+                <span className="txt">{data.wind.speed} km/h</span>
             </div>
             <div className="block">Humidity<br/><br/>
-                <span className="txt">{weather.main.humidity}%</span>
+                <span className="txt">{data.main.humidity}%</span>
             </div>
             <div className="block">Sunrise & Sunset<br/><br/>
-                <span className="txt">{dateBuilder(weather.sys.sunrise)} & {dateBuilder(weather.sys.sunset)}</span>
+                <span className="txt">{dateBuilder(data.sys.sunrise)} & {dateBuilder(data.sys.sunset)}</span>
             </div>
         </div>
     )
